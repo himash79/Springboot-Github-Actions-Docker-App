@@ -1,2 +1,33 @@
 01) Create Spring boot project.
 02) Create Github repository and push the project.
+03) Navigate to `Actions` under repository.
+04) Choose `Configure` under `Java with Maven`.
+05) Set `run: mvn clean install` and click `Start Commit` maven.yml file.
+06) Click `Create a new branch` and `Propose new file`.
+07) CLick `Create pull request`.
+08) Click `Merge pull request` and `Confirm merge`.
+09) Get `pull` from github.
+10) Open `maven.yml` and set project java version.
+11) Push modification.
+12) Add below docker details to `maven.yml`.
+    - name: Build & push Docker image
+      uses: mr-smithers-excellent/docker-build-push@v5
+      with:
+        image: [docker user name]/springboot-images-new
+        tags: latest
+        registry: docker.io
+        dockerfile: Dockerfile
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+13) Add <finalName>springboot-images-new</finalName> to `pom.xml` and below jar name this as well.
+14) Create Dockerfile and add below configurations.
+	FROM openjdk:8
+	EXPOSE 8080
+	ADD target/springboot-images-new.jar springboot-images-new.jar
+	ENTRYPOINT ["java","-jar","/springboot-images-new.jar"]
+15) Create Secrets `Settings` and click `Secrets` and `actions`.
+16) Click `New repository secret` the `Name` = DOCKER_USERNAME and `value` = docker username 
+17) Click `New repository secret` the `Name` = DOCKER_PASSWORD and `value` = docker password
+18) Push changes to github.
+19) Get pull docker image from docker hub. docker pull [docker username]/[docker repo name]
+20) Run the image and expose the end point. docker run -p 8080:8080 [repo name]
