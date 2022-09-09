@@ -1,0 +1,2 @@
+01) Create Spring boot project.
+02) Create Github repository and push the project.
